@@ -1,9 +1,27 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './header.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faBed,faPlane,faCar,faTaxi} from "@fortawesome/free-solid-svg-icons"
+import {faBed,faPlane,faCar,faTaxi, faCalendarDays, faPerson} from "@fortawesome/free-solid-svg-icons"
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import {format} from "date-fns"
 
 const Header = () => {
+  // opening and closing of calendar
+  const[openDate,setOpenDate]=useState(false)
+
+
+  // calendar
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection'
+    }
+  ]);
+
+
   return (
     <div className="header">
         <div className="headerContainer">
@@ -33,6 +51,31 @@ const Header = () => {
         <h1 className="headerTitle">A lifetime of discounts? It's Genius</h1>
         <p className="headerDesc">Get Rewarded for your travels - unlock instant saving of 10% or more with a free Lamabooking account</p>
         <button className="headerBtn">Sign in/Register</button>
+
+        <div className="headerSearch">
+          <div className="headerSearchItem">
+            <input type="text" placeholder="Where are you going?" className="headerSearchInput"  />
+          </div>
+          <div className="headerSearchItem">
+            <FontAwesomeIcon icon={faCalendarDays} className="headerIcon"/>
+            <span onClick={() =>setOpenDate(!openDate)} className="headerSearchText">{`${format(state[0].startDate,"MM/dd/yyyy")} to ${format(state[0].endDate,"MM/dd/yyyy")} `}</span>
+            {openDate && <DateRange
+  editableDateInputs={true}
+  onChange={item => setState([item.selection])}
+  moveRangeOnFirstSelection={false}
+  ranges={state}
+  className="date"
+/>}
+          </div>
+          <div className="headerSearchItem">
+            <FontAwesomeIcon icon={faPerson} className="headerIcon"/>
+          <span className="headerSearchText">2 adults 2 children 1 room</span>
+          </div>
+
+          <div className="headerSearchItem">
+             <button className="headerBtn">Search</button>
+          </div>
+        </div>
         </div>
         
     </div>
@@ -40,3 +83,14 @@ const Header = () => {
 }
 
 export default Header
+
+
+
+
+
+
+// for calendar date-fns
+// npm i date-fns
+// npm install react-date-range
+
+// react-date-range wonderfull npm package for calendars in react   
