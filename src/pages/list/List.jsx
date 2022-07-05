@@ -6,10 +6,12 @@ import {useLocation} from "react-router-dom"
 import {format} from "date-fns"
 import { DateRange } from 'react-date-range';
 import SearchItem from '../../components/searchItem/SearchItem'
+import {Link} from 'react-router-dom'
 
 const List = () => {
 
   const location=useLocation()
+  // const navigate=useNavigate()
 
   const[destination,setDestination] = useState(location.state.destination);
   const[date,setDate]=useState(location.state.state)
@@ -85,7 +87,8 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <Link to="/hotels/1"><button>Search</button></Link>
+            
                 
           </div>
           
